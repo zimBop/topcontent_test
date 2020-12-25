@@ -13,7 +13,10 @@ return [
     |
     */
 
-    'defaults' => [],
+    'defaults' => [
+        'guard' => 'web',
+        'passwords' => 'users',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -63,10 +66,10 @@ return [
     */
 
     'providers' => [
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\User::class,
+        ],
     ],
 
     /*
