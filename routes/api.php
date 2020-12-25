@@ -13,3 +13,5 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('artisans', 'Api\Artisan\GetArtisanListController')->name(R_GET_ARTISAN_LIST);
