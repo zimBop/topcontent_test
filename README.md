@@ -31,6 +31,16 @@
         ```
         cp .env.example .env
         ```
+    
+    * Set application key:
+        ```
+        php artisan key:generate
+        ```
+          
+    * Add link to the storage:
+        ```
+        php artisan storage:link
+        ```
 
     * Apply migrations:
         ```
