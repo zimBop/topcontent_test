@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Resources\ArtisanResource;
+use App\Http\Resources\ServiceResource;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         ArtisanResource::withoutWrapping();
+        ServiceResource::withoutWrapping();
     }
 }
