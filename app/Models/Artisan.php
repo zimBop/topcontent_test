@@ -17,4 +17,9 @@ class Artisan extends Model
     {
         return $this->belongsToMany(WorkDay::class);
     }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
 }
