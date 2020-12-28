@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Timeslot extends Model
@@ -14,4 +15,9 @@ class Timeslot extends Model
     protected $fillable = [
         self::START,
     ];
+
+    public function getStartAttribute($value)
+    {
+        return Carbon::createFromFormat('H:i:s', $value)->format('H:i');
+    }
 }
