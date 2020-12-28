@@ -69,6 +69,33 @@ class AppointmentService
             ->toArray();
     }
 
+    public function getNearestAvailableDates(int $serviceId): array
+    {
+        $duration = Service::find($serviceId)->duration;
+
+        return $this->artisan
+            ->work_days()
+            ->where(WorkDay::DATE, '>=', now()->format('Y-m-d'))
+            ->whereExists(function ($query) use ($duration) {
+                $query->select(DB::raw(1))
+                    ->from('timeslots')
+                    ->whereRaw("timeslots.start + INTERVAL $duration MINUTE <= '18:00:00'")
+                    ->whereNotExists(function ($query) use ($duration) {
+                        $query->select(DB::raw(1))
+                            ->from('appointments')
+                            ->whereRaw("appointments.date = work_days.date")
+                            ->whereRaw("appointments.artisan_id = {$this->artisan->id}")
+                            ->whereRaw('appointments.end > timeslots.start')
+                            ->whereRaw("timeslots.start + INTERVAL $duration MINUTE > appointments.start");
+                    });
+            })
+            ->limit(7)
+            ->orderBy('date')
+            ->get(['date'])
+            ->pluck('date')
+            ->toArray();
+    }
+
     protected function isWorkDayDoesntExist(): bool
     {
         return $this->artisan->work_days()
